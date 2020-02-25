@@ -1,0 +1,5 @@
+export const DELETE_LISTING = 'DELETE_LISTING'
+export const ADD_LISTING = 'ADD_LISTING'
+export const LOG_IN = 'LOG_IN'
+export const LOG_OUT = 'LOG_OUT'
+export const FETCH_COORDINATES = 'FETCH_COORDINATES'
