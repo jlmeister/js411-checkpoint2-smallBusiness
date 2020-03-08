@@ -1,6 +1,11 @@
 import { combineReducers } from "redux";
 import { ADD_LISTING, DELETE_LISTING } from "./constants";
 
+/**
+ * Auxiliary function to format time inputs.
+ * @TODO maybe find a good home for this outside the reducer. It shouldn't live here.
+ * @TODO also need to remove leading zero for hour values less than 10.
+ */
 const formatHours = (hours) => {
   let formattedHours = '';
   let timeArr = hours.split(':');
@@ -26,10 +31,11 @@ const formatHours = (hours) => {
 const listings = (state = [], action) => {
   switch (action.type) {
     case ADD_LISTING:
-      console.log(action.value.hoursFrom, action.value.hoursTo)
-      action.value.hoursFrom = formatHours(action.value.hoursFrom)
-      action.value.hoursTo = formatHours(action.value.hoursTo)
-      return [...state, action.value];
+      const listing = action.value.listing;
+      listing.hoursFrom = formatHours(listing.hoursFrom)
+      listing.hoursTo = formatHours(listing.hoursTo)
+      listing.id = action.value.id;
+      return [...state, listing];
     case DELETE_LISTING:
       return state.filter((listing, index) => index !== action.value );
     default:

@@ -16,7 +16,7 @@ const Navigation = () => {
         <Typography variant='h6' style={{flexGrow: 1}}>
           Austin Small Business
         </Typography>
-        <Button color='inherit' component={Link} to='/listings'>Listings</Button>
+        <Button color='inherit' component={Link} to='/'>Listings</Button>
         {
           checkAuth() ? (
               <Button color='inherit' onClick={() => logout()}>Logout</Button>

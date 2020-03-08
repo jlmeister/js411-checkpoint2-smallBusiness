@@ -21,9 +21,10 @@ const Listings = ({ listings, deleteListing }, props) => {
         </TableHead>
         <TableBody>
           {listings.map((listing, idx) => {
+            console.log(listing)
             return (
               <TableRow key={idx}>
-                <TableCell>{listing.name}</TableCell>
+                <TableCell component={Link} to={`/details/${listing.id}`}>{listing.name}</TableCell>
                 <TableCell>{listing.description}</TableCell>
                 <TableCell>{listing.hoursFrom}-{listing.hoursTo}</TableCell>
                 <TableCell>{listing.address}</TableCell>
