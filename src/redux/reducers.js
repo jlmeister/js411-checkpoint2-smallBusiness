@@ -1,42 +1,40 @@
 import { combineReducers } from "redux";
-import { ADD_LISTING, DELETE_LISTING, LOG_IN, LOG_OUT, FETCH_COORDINATES } from "./constants";
+import { ADD_LISTING, DELETE_LISTING } from "./constants";
 
-const user = (state = null, action) => {
-  switch (action.type) {
-    case LOG_IN:
-      console.log('log in')
-      document.cookie = 'user='+action.value+';max-age=600';
-      return action.value;
-    case LOG_OUT:
-      console.log('log out')
-      document.cookie = '';
-      return null;
-    default:
-      return state;
+const formatHours = (hours) => {
+  let formattedHours = '';
+  let timeArr = hours.split(':');
+  console.log('timeArr ', timeArr)
+
+  if (timeArr[0] < 12) {
+    if (timeArr[1] === '00')
+      formattedHours = timeArr[0].concat('am')
+    else
+      formattedHours = hours + 'am'
   }
+  else {
+    timeArr[0] = parseInt(timeArr[0]) - 12;
+    if (timeArr[1] === '00')
+      formattedHours = timeArr[0].toString().concat('pm')
+    else
+      formattedHours = timeArr.join(':').concat('pm');
+  }
+  console.log('formatted ', formattedHours)
+  return formattedHours;
 }
 
 const listings = (state = [], action) => {
   switch (action.type) {
     case ADD_LISTING:
-      console.log('add listing')
-      return state;
+      console.log(action.value.hoursFrom, action.value.hoursTo)
+      action.value.hoursFrom = formatHours(action.value.hoursFrom)
+      action.value.hoursTo = formatHours(action.value.hoursTo)
+      return [...state, action.value];
     case DELETE_LISTING:
-      console.log('delete listing')
-      return state;
+      return state.filter((listing, index) => index !== action.value );
     default:
       return state;
   }
 }
 
-const map = (state = '', action) => {
-  switch (action.type) {
-    case FETCH_COORDINATES:
-      console.log('fetch coordinates')
-      return state;
-    default:
-      return state;
-  }
-}
-
-export default combineReducers({ user, listings, map })
+export default combineReducers({ listings })

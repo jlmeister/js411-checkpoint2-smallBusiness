@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Button, Container, TextField } from "@material-ui/core";
 
-const Login = ({ login }, props) => {
+const Login = ({ history }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  
+
   const handleSubmit = e => {
     e.preventDefault();
-    login(username)
+    document.cookie = 'loggedIn=true;max-age=600';
+    history.push('/')
   }
 
   return (
@@ -19,7 +20,8 @@ const Login = ({ login }, props) => {
           value={username}
           name="username"
           label="Username"
-          type="text"/>
+          type="text"
+          style={{ marginBottom: '.5rem' }} />
         <TextField
           required
           onChange={e => setPassword(e.target.value)}
@@ -31,7 +33,8 @@ const Login = ({ login }, props) => {
           type="submit"
           className="login-button"
           variant="contained"
-          color="primary">Login</Button>
+          color="primary"
+          style={{ width: '250px', margin: '2rem auto 0' }}>Login</Button>
       </form>
     </Container>
   )
